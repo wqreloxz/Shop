@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101114">
+<title>Wqr Shop</title>
+
+<style>
+:root {
+    --bg: #101114;
+    --card: #18191e;
+    --card-hover: #202127;
+    --text: #f5f5f5;
+    --muted: #92939b;
+    --border: #292a31;
+    --blue: #3978f6;
+    --green: #35bd78;
+    --red: #ed5555;
+    --input: #202127;
+}
+
+body.light {
+    --bg: #f5f6f8;
+    --card: #ffffff;
+    --card-hover: #f0f1f4;
+    --text: #17181c;
+    --muted: #777983;
+    --border: #e5e6eb;
+    --blue: #3978f6;
+    --green: #199b5b;
+    --red: #df4242;
+    --input: #f0f1f4;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    min-height: 100vh;
+    transition: background .2s, color .2s;
+}
+
+button, input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.container {
+    max-width: 760px;
+    margin: auto;
+    padding: 22px 18px 50px;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 750;
+    letter-spacing: -.8px;
+}
+
+.logo span {
+    color: var(--blue);
+}
+
+.settings {
+    display: flex;
+    gap: 8px;
+}
+
+.switch {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 9px 13px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.switch.active {
+    border-color: var(--blue);
+    color: var(--blue);
+}
+
+.welcome {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    padding: 25px;
+    margin-bottom: 22px;
+}
+
+.welcome h1 {
+    font-size: 25px;
+    margin-bottom: 13px;
+}
+
+.welcome p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.welcome h3 {
+    font-size: 13px;
+    margin: 22px 0 10px;
+}
+
+.welcome .primary {
+    margin-top: 22px;
+}
+
+.primary {
+    background: var(--blue);
+    border: none;
+    color: white;
+    width: 100%;
+    padding: 14px;
+    border-radius: 11px;
+    font-weight: 650;
+    font-size: 14px;
+    transition: opacity .2s;
+}
+
+.primary:hover {
+    opacity: .88;
+}
+
+.menu-title {
+    margin: 25px 0 15px;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.user-greeting {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 11px;
+}
+
+.menu-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 12px;
+    padding: 17px 14px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.menu-btn:hover {
+    background: var(--card-hover);
+    border-color: var(--blue);
+}
+
+.menu-btn.catalog {
+    background: var(--blue);
+    color: white;
+    border-color: var(--blue);
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+    animation: appear .2s ease;
+}
+
+@keyframes appear {
+    from {opacity: 0; transform: translateY(5px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.back {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 9px;
+    padding: 10px 14px;
+    margin-bottom: 22px;
+    font-size: 13px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 750;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 22px;
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.category {
+    padding: 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    text-align: left;
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.category:hover {
+    border-color: var(--blue);
+}
+
+.products {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.product {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 17px;
+    border-radius: 13px;
+}
+
+.product.available {
+    border-left: 3px solid var(--green);
+}
+
+.product.unavailable {
+    border-left: 3px solid var(--red);
+}
+
+.product-name {
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.product-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.price {
+    font-size: 18px;
+    font-weight: 750;
+}
+
+.status {
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.status.green {
+    color: var(--green);
+}
+
+.status.red {
+    color: var(--red);
+}
+
+.order {
+    display: block;
+    text-decoration: none;
+    background: var(--blue);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 9px;
+    margin-top: 14px;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.profile-card, .info-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 19px;
+    border-radius: 13px;
+    margin-bottom: 12px;
+}
+
+.label {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.value {
+    font-size: 15px;
+    font-weight: 650;
+    word-break: break-all;
+}
+
+.ref-link {
+    background: var(--input);
+    border: 1px solid var(--border);
+    padding: 12px;
+    border-radius: 9px;
+    font-size: 12px;
+    word-break: break-all;
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+.copy {
+    width: 100%;
+    background: var(--card-hover);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.input {
+    width: 100%;
+    background: var(--input);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 15px;
+    outline: none;
+    margin-bottom: 12px;
+}
+
+.input:focus {
+    border-color: var(--blue);
+}
+
+.rules {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: 13px;
+    margin-bottom: 12px;
+}
+
+.rules h3 {
+    font-size: 14px;
+    margin-bottom: 9px;
+}
+
+.rules p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+.support {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 23px;
+    border-radius: 13px;
+    text-align: center;
+}
+
+.support a {
+    display: inline-block;
+    margin-top: 17px;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.orders-empty {
+    padding: 25px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.notice {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-top: 15px;
+}
+
+.footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 40px;
+}
+
+@media(max-width: 450px) {
+    .container {
+        padding: 17px 13px 35px;
+    }
+
+    .welcome {
+        padding: 19px;
+    }
+
+    .welcome h1 {
+        font-size: 22px;
+    }
+
+    .menu {
+        gap: 8px;
+    }
+
+    .menu-btn {
+        padding: 15px 11px;
+        font-size: 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header class="topbar">
+    <div class="logo">Wqr<span>Shop</span></div>
+
+    <div class="settings">
+        <button class="switch active" id="ru" onclick="setLang('ru')">RU</button>
+        <button class="switch" id="en" onclick="setLang('en')">EN</button>
+        <button class="switch" id="theme" onclick="toggleTheme()">☼</button>
+    </div>
+</header>
+
+<!-- WELCOME -->
+
+<section id="welcome" class="welcome" style="display:none">
+    <h1 data="welcomeTitle">Добро пожаловать в Wqr Shop!</h1>
+
+    <p data="welcomeText">
+        Мы — магазин цифровых товаров и подписок прямо в Telegram.
+        Никаких ожиданий оператора: оплатил — получил товар за секунду.
+    </p>
+
+    <h3 data="selling">ЧТО МЫ ПРОДАЁМ</h3>
+
+    <p>
+        ChatGPT Plus / Business / Codex API<br>
+        Claude Pro<br>
+        Gemini Pro (до 18 месяцев)<br>
+        Canva Pro, CapCut, Figma и многое другое<br>
+        Лицензии и ключи активации
+    </p>
+
+    <h3 data="why">ПОЧЕМУ МЫ</h3>
+
+    <p data="advantages">
+        Гарантия на каждый товар<br>
+        Удобная оплата<br>
+        Живая поддержка
+    </p>
+
+    <h3 data="refTitle">ПРИВОДИ ДРУГА — ПОЛУЧАЙ $1</h3>
+
+    <p data="refWelcome">
+        За каждые $15 трат приглашённого друга тебе начисляется $1 на баланс.
+    </p>
+
+    <button class="primary" onclick="enterShop()" data="continue">
+        Перейти в магазин
+    </button>
+</section>
+
+<!-- HOME -->
+
+<section id="home" class="page active">
+
+    <h2 class="menu-title" data="menu">Меню</h2>
+
+    <div class="user-greeting">
+        <span data="hello">Добро пожаловать,</span>
+        <b id="username">User</b>
+    </div>
+
+    <div class="menu">
+
+        <button class="menu-btn catalog" onclick="openPage('catalog')" data="catalog">
+            Каталог
+        </button>
+
+        <button class="menu-btn" onclick="openPage('profile')" data="profile">
+            Профиль
+        </button>
+
+        <button class="menu-btn" onclick="openPage('referral')" data="referral">
+            $1 за друга
+        </button>
+
+        <button class="menu-btn" onclick="openPage('rules')" data="rules">
+            Правила бота
+        </button>
+
+        <button class="menu-btn" onclick="openPage('promo')" data="promo">
+            Ввести промокод
+        </button>
+
+        <button class="menu-btn" onclick="openPage('support')" data="support">
+            Поддержка
+        </button>
+
+    </div>
+
+</section>
+
+<!-- CATALOG -->
+
+<section id="catalog" class="page">
+
+    <button class="back" onclick="goHome()" data="back">← Назад</button>
+
+    <h1 class="page-title" data="catalog">Каталог</h1>
+    <p class="subtitle" data="chooseCategory">Выберите категорию товаров.</p>
+
+    <div class="categories">
+
+        <button class="category" onclick="showProducts('ChatGPT')">ChatGPT</button>
+        <button class="category" onclick="showProducts('Claude')">Claude</button>
+        <button class="category" onclick="showProducts('Gemini')">Gemini</button>
+        <button class="category" onclick="showProducts('YouTube')">YouTube</button>
+        <button class="category" onclick="showProducts('Figma')">Figma</button>
+        <button class="category" onclick="showProducts('Canva')">Canva</button>
+        <button class="category" onclick="showProducts('Capcut')">CapCut</button>
+        <button class="category" onclick="showProducts('Muse AI')">Muse AI</button>
+        <button class="category" onclick="showProducts('Spotify')">Spotify</button>
+
+    </div>
+</section>
+
+<!-- PRODUCTS -->
+
+<section id="products" class="page">
+
+    <button class="back" onclick="openPage('catalog')" data="back">← Назад</button>
+
+    <h1 class="page-title" id="categoryName">ChatGPT</h1>
+    <p class="subtitle" data="productsSubtitle">Доступные товары и цены.</p>
+
+    <div class="products" id="productList"></div>
+
+    <p class="notice" data="orderNotice">
+        Для оформления заказа обращайтесь в поддержку @wqreloxzz.
+    </p>
+
+</section>
+
+<!-- PROFILE -->
+
+<section id="profile" class="page">
+
+    <button class="back" onclick="goHome()" data="back">← Назад</button>
+
+    <h1 class="page-title" data="profile">Профиль</h1>
+
+    <div class="profile-card">
+        <div class="label" data="usernameLabel">Имя пользователя</div>
+        <div class="value" id="profileName">User</div>
+    </div>
+
+    <div class="profile-card">
+        <div class="label">Telegram ID</div>
+        <div class="value" id="profileId">—</div>
+    </div>
+
+    <div class="profile-card">
+        <div class="label" data="refLinkLabel">Реферальная ссылка</div>
+        <div class="ref-link" id="profileRef"></div>
+        <button class="copy" onclick="copyReferral()" data="copy">Скопировать ссылку</button>
+    </div>
+
+    <div class="profile-card">
+        <div class="label" data="invited">Приглашено друзей</div>
+        <div class="value" id="invitedCount">0</div>
+    </div>
+
+    <div class="profile-card">
+        <div class="label" data="balance">Баланс</div>
+        <div class="value" id="balance">$0.00</div>
+    </div>
+
+    <h2 class="menu-title" data="myOrders">Мои заказы</h2>
+
+    <div id="orders" class="orders-empty" data="noOrders">
+        У вас пока нет заказов.
+    </div>
+
+</section>
+
+<!-- REFERRAL -->
+
+<section id="referral" class="page">
+
+    <button class="back" onclick="goHome()" data="back">← Назад</button>
+
+    <h1 class="page-title" data="refTitle">$1 за друга</h1>
+
+    <div class="info-card">
+        <p class="subtitle" data="refDescription">
+            За каждого приведённого вами друга, который потратит в боте больше $15,
+            вы получите $1 на баланс.
+            Ссылку также можно использовать для рекламы бота.
+        </p>
+
+        <div class="label" data="yourLink">Ваша реферальная ссылка</div>
+
+        <div class="ref-link" id="referralLink"></div>
+
+        <button class="copy" onclick="copyReferral()" data="copy">
+            Скопировать ссылку
+        </button>
+    </div>
+
+    <div class="profile-card">
+        <div class="label" data="invited">Приглашено друзей</div>
+        <div class="value" id="refCount">0</div>
+    </div>
+
+    <div class="profile-card">
+        <div class="label" data="earned">Заработано с приглашений</div>
+        <div class="value" id="refEarned">$0.00</div>
+    </div>
+
+</section>
+
+<!-- RULES -->
+
+<section id="rules" class="page">
+
+    <button class="back" onclick="goHome()" data="back">← Назад</button>
+
+    <h1 class="page-title" data="rulesTitle">Условия использования</h1>
+
+    <p class="subtitle" data="rulesIntro">
+        Пожалуйста, внимательно ознакомьтесь с правилами перед пополнением баланса и покупкой товаров.
+    </p>
+
+    <div class="rules">
+        <h3 data="rule1Title">1. Возврат средств</h3>
+        <p data="rule1">
+            Средства, внесённые на баланс бота, возврату не подлежат.
+            Исключение возможно, если после пополнения баланса вы не совершили
+            ни одной покупки и не использовали зачисленные средства.
+            Для оформления возврата обратитесь в поддержку.
+        </p>
+    </div>
+
+    <div class="rules">
+        <h3 data="rule2Title">2. Гарантия на товары</h3>
+        <p data="rule2">
+            Гарантия действует только на товары, для которых она указана
+            в карточке, и только в течение указанного гарантийного срока.
+            Если поддержка подтвердит проблему, мы заменим товар
+            или восстановим услугу. Если замена невозможна,
+            вернём стоимость покупки на реквизиты, согласованные с поддержкой.
+        </p>
+    </div>
+
+    <div class="rules">
+        <h3 data="rule3Title">3. Реферальные вознаграждения</h3>
+        <p data="rule3">
+            Приглашайте друзей и получайте $1 после первого успешного
+            пополнения каждого друга на сумму не меньше $10.
+            Бонус начисляется один раз за приглашённого и поступает на основной баланс.
+        </p>
+    </div>
+
+    <div class="rules">
+        <p data="rulesEnd">
+            Используя бота и приобретая товары, вы подтверждаете,
+            что ознакомились и согласны с настоящими условиями.
+        </p>
+    </div>
+
+</section>
+
+<!-- PROMOCODE -->
+
+<section id="promo" class="page">
+
+    <button class="back" onclick="goHome()" data="back">← Назад</button>
+
+    <h1 class="page-title" data="promoTitle">Промокод</h1>
+
+    <p class="subtitle" data="promoDescription">
+        Введите промокод и получите бонус на баланс.
+    </p>
+
+    <input
+        type="text"
+        id="promoInput"
+        class="input"
+        placeholder="Введите промокод"
+        autocomplete="off"
+    >
+
+    <button class="primary" onclick="activatePromo()" data="activate">
+        Активировать
+    </button>
+
+    <p id="promoMessage" class="notice"></p>
+
+</section>
+
+<!-- SUPPORT -->
+
+<section id="support" class="page">
+
+    <button class="back" onclick="goHome()" data="back">← Назад</button>
+
+    <h1 class="page-title" data="support">Поддержка</h1>
+
+    <p class="subtitle" data="supportDescription">
+        По всем вопросам, связанным с товарами и заказами, обращайтесь в поддержку.
+    </p>
+
+    <div class="support">
+        <div class="value">@wqreloxzz</div>
+
+        <a href="https://t.me/wqreloxzz" target="_blank" data="contact">
+            Написать в поддержку →
+        </a>
+    </div>
+
+</section>
+
+<footer class="footer">
+    Wqr Shop © 2026
+</footer>
+
+</div>
+
+<script>
+
+/* PRODUCTS */
+
+const products = {
+
+    "ChatGPT": [
+        {name:"API ChatGPT Codex 50M token 2 day",price:"6",available:true},
+        {name:"ChatGPT Plus 1M FW",price:"15",available:false},
+        {name:"ChatGPT business invite",price:"15",available:false},
+        {name:"Codex API",price:"23",available:false},
+        {name:"ChatGPT pro x20",price:"200",available:false},
+        {name:"ChatGPT plus K12 edu 2 years",price:"5",available:false}
+    ],
+
+    "Claude": [
+        {name:"100$ API Claude 30 days",price:"5",available:true},
+        {name:"Claude API 100M",price:"6.50",available:true},
+        {name:"Apk Claude 10M 1 day",price:"2",available:true}
+    ],
+
+    "Gemini": [
+        {name:"Gemini Pro 18 Months",price:"18",available:false}
+    ],
+
+    "YouTube": [
+        {name:"YouTube premium account 1M",price:"4",available:true}
+    ],
+
+    "Figma": [
+        {name:"Figma pro edu 2 years",price:"12",available:true}
+    ],
+
+    "Canva": [
+        {name:"Canva pro 2 years",price:"3.50",available:true}
+    ],
+
+    "Capcut": [
+        {name:"Capcut pro 1 month",price:"3.40",available:true}
+    ],
+
+    "Muse AI": [
+        {name:"Muse ai 1B token",price:"2",available:true}
+    ],
+
+    "Spotify": [
+        {name:"Spotify premium 1M",price:"2.90",available:true}
+    ]
+
+};
+
+/* TELEGRAM USER */
+
+const telegram = window.Telegram?.WebApp;
+telegram?.ready();
+
+const tgUser = telegram?.initDataUnsafe?.user;
+
+const userId = tgUser?.id || localStorage.getItem("wqr_user_id") || (
+    "guest_" + Math.random().toString(36).slice(2,10)
+);
+
+localStorage.setItem("wqr_user_id", userId);
+
+const userName =
+    tgUser?.first_name ||
+    localStorage.getItem("wqr_username") ||
+    "User";
+
+localStorage.setItem("wqr_username", userName);
+
+document.getElementById("username").textContent = userName;
+document.getElementById("profileName").textContent = userName;
+document.getElementById("profileId").textContent = userId;
+
+/* REFERRAL */
+
+const botUsername = "WqrShopBot";
+
+const referralLink =
+    "https://t.me/" + botUsername + "?start=ref_" + userId;
+
+document.getElementById("profileRef").textContent = referralLink;
+document.getElementById("referralLink").textContent = referralLink;
+
+function copyReferral() {
+    navigator.clipboard.writeText(referralLink);
+    alert(lang === "ru" ? "Ссылка скопирована" : "Link copied");
+}
+
+/* STORAGE */
+
+let balance = Number(localStorage.getItem("wqr_balance") || 0);
+let invited = Number(localStorage.getItem("wqr_invited") || 0);
+let earned = Number(localStorage.getItem("wqr_earned") || 0);
+
+function updateProfile() {
+
+    document.getElementById("balance").textContent =
+        "$" + balance.toFixed(2);
+
+    document.getElementById("invitedCount").textContent = invited;
+    document.getElementById("refCount").textContent = invited;
+
+    document.getElementById("refEarned").textContent =
+        "$" + earned.toFixed(2);
+
+}
+
+updateProfile();
+
+/* NAVIGATION */
+
+function openPage(id) {
+
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById("welcome").style.display = "none";
+
+    document.getElementById(id).classList.add("active");
+
+    window.scrollTo({top:0,behavior:"smooth"});
+
+}
+
+function goHome() {
+    openPage("home");
+}
+
+/* PRODUCTS */
+
+function showProducts(category) {
+
+    document.getElementById("categoryName").textContent = category;
+
+    const list = document.getElementById("productList");
+
+    list.innerHTML = "";
+
+    products[category].forEach(product => {
+
+        const item = document.createElement("div");
+
+        item.className = "product " +
+            (product.available ? "available" : "unavailable");
+
+        const status = product.available
+            ? (lang === "ru" ? "В наличии" : "Available")
+            : (lang === "ru" ? "Нет в наличии" : "Out of stock");
+
+        item.innerHTML = `
+            <div class="product-name">${product.name}</div>
+
+            <div class="product-bottom">
+                <div class="price">$${product.price}</div>
+
+                <div class="status ${product.available ? "green" : "red"}">
+                    ${status}
+                </div>
+            </div>
+
+            <a class="order"
+               href="https://t.me/wqreloxzz"
+               target="_blank">
+               ${lang === "ru" ? "Заказать" : "Order"}
+            </a>
+        `;
+
+        list.appendChild(item);
+
+    });
+
+    openPage("products");
+
+}
+
+/* PROMOCODE */
+
+function activatePromo() {
+
+    const input = document.getElementById("promoInput");
+
+    const message = document.getElementById("promoMessage");
+
+    const code = input.value.trim().toLowerCase();
+
+    if(code === "open_store25") {
+
+        if(localStorage.getItem("wqr_promo_open_store25")) {
+
+            message.style.color = "var(--red)";
+            message.textContent = lang === "ru"
+                ? "Этот промокод уже использован."
+                : "This promo code has already been used.";
+
+            return;
+
+        }
+
+        balance += 1.5;
+
+        localStorage.setItem("wqr_balance", balance);
+        localStorage.setItem("wqr_promo_open_store25", "true");
+
+        updateProfile();
+
+        message.style.color = "var(--green)";
+
+        message.textContent = lang === "ru"
+            ? "Промокод активирован! Начислено $1.50."
+            : "Promo activated! $1.50 added.";
+
+        input.value = "";
+
+    } else {
+
+        message.style.color = "var(--red)";
+
+        message.textContent = lang === "ru"
+            ? "Неверный промокод."
+            : "Invalid promo code.";
+
+    }
+
+}
+
+/* THEME */
+
+function toggleTheme() {
+
+    document.body.classList.toggle("light");
+
+    const light = document.body.classList.contains("light");
+
+    localStorage.setItem("wqr_theme", light ? "light" : "dark");
+
+    document.getElementById("theme").textContent =
+        light ? "☾" : "☼";
+
+}
+
+if(localStorage.getItem("wqr_theme") === "light") {
+    document.body.classList.add("light");
+    document.getElementById("theme").textContent = "☾";
+}
+
+/* LANGUAGE */
+
+let lang = localStorage.getItem("wqr_lang") || "ru";
+
+const translations = {
+
+ru: {
+
+welcomeTitle:"Добро пожаловать в Wqr Shop!",
+welcomeText:"Мы — магазин цифровых товаров и подписок прямо в Telegram. Никаких ожиданий оператора: оплатил — получил товар за секунду.",
+selling:"ЧТО МЫ ПРОДАЁМ",
+why:"ПОЧЕМУ МЫ",
+advantages:"Гарантия на каждый товар<br>Удобная оплата<br>Живая поддержка",
+refTitle:"$1 ЗА ДРУГА",
+refWelcome:"За каждые $15 трат приглашённого друга тебе начисляется $1 на баланс.",
+continue:"Перейти в магазин",
+menu:"Меню",
+hello:"Добро пожаловать,",
+catalog:"Каталог",
+profile:"Профиль",
+referral:"$1 за друга",
+rules:"Правила бота",
+promo:"Ввести промокод",
+support:"Поддержка",
+back:"← Назад",
+chooseCategory:"Выберите категорию товаров.",
+productsSubtitle:"Доступные товары и цены.",
+orderNotice:"Для оформления заказа обращайтесь в поддержку @wqreloxzz.",
+usernameLabel:"Имя пользователя",
+refLinkLabel:"Реферальная ссылка",
+copy:"Скопировать ссылку",
+invited:"Приглашено друзей",
+balance:"Баланс",
+myOrders:"Мои заказы",
+noOrders:"У вас пока нет заказов.",
+refDescription:"За каждого приведённого вами друга, который потратит в боте больше $15, вы получите $1 на баланс. Ссылку также можно использовать для рекламы бота.",
+yourLink:"Ваша реферальная ссылка",
+earned:"Заработано с приглашений",
+rulesTitle:"Условия использования",
+rulesIntro:"Пожалуйста, внимательно ознакомьтесь с правилами перед пополнением баланса и покупкой товаров.",
+rule1Title:"1. Возврат средств",
+rule1:"Средства, внесённые на баланс бота, возврату не подлежат. Исключение возможно, если после пополнения баланса вы не совершили ни одной покупки и не использовали зачисленные средства. Для оформления возврата обратитесь в поддержку.",
+rule2Title:"2. Гарантия на товары",
+rule2:"Гарантия действует только на товары, для которых она указана в карточке, и только в течение указанного гарантийного срока. Если поддержка подтвердит проблему, мы заменим товар или восстановим услугу. Если замена невозможна, вернём стоимость покупки на реквизиты, согласованные с поддержкой.",
+rule3Title:"3. Реферальные вознаграждения",
+rule3:"Приглашайте друзей и получайте $1 после первого успешного пополнения каждого друга на сумму не меньше $10. Бонус начисляется один раз за приглашённого и поступает на основной баланс.",
+rulesEnd:"Используя бота и приобретая товары, вы подтверждаете, что ознакомились и согласны с настоящими условиями.",
+promoTitle:"Промокод",
+promoDescription:"Введите промокод и получите бонус на баланс.",
+activate:"Активировать",
+supportDescription:"По всем вопросам, связанным с товарами и заказами, обращайтесь в поддержку.",
+contact:"Написать в поддержку →"
+
+},
+
+en: {
+
+welcomeTitle:"Welcome to Wqr Shop!",
+welcomeText:"We are a digital goods and subscription store directly on Telegram. No waiting for an operator: pay and receive your product instantly.",
+selling:"WHAT WE SELL",
+why:"WHY CHOOSE US",
+advantages:"Warranty on every product<br>Convenient payment<br>Live customer support",
+refTitle:"$1 FOR A FRIEND",
+refWelcome:"Earn $1 for every $15 spent by your invited friend.",
+continue:"Enter the shop",
+menu:"Menu",
+hello:"Welcome,",
+catalog:"Catalog",
+profile:"Profile",
+referral:"$1 per friend",
+rules:"Shop rules",
+promo:"Enter promo code",
+support:"Support",
+back:"← Back",
+chooseCategory:"Choose a product category.",
+productsSubtitle:"Available products and prices.",
+orderNotice:"To place an order, contact support @wqreloxzz.",
+usernameLabel:"Username",
+refLinkLabel:"Referral link",
+copy:"Copy referral link",
+invited:"Friends invited",
+balance:"Balance",
+myOrders:"My orders",
+noOrders:"You have no orders yet.",
+refDescription:"For every invited friend who spends more than $15 in the shop, you receive $1 to your balance. You can also use your link to advertise the shop.",
+yourLink:"Your referral link",
+earned:"Referral earnings",
+rulesTitle:"Terms of Service",
+rulesIntro:"Please read the rules carefully before adding funds or purchasing products.",
+rule1Title:"1. Refunds",
+rule1:"Funds added to the bot balance are non-refundable. An exception may apply if you have not made any purchases or used the credited funds after depositing. Contact support to request a refund.",
+rule2Title:"2. Product warranty",
+rule2:"The warranty applies only to products where it is specified in the product card and only during the stated warranty period. If support confirms an issue, we will replace the product or restore the service. If replacement is impossible, we will refund the purchase price using payment details agreed with support.",
+rule3Title:"3. Referral rewards",
+rule3:"Invite friends and receive $1 after each friend makes their first successful deposit of at least $10. The bonus is credited once per invited friend to the main balance.",
+rulesEnd:"By using the bot and purchasing products, you confirm that you have read and accepted these terms.",
+promoTitle:"Promo code",
+promoDescription:"Enter a promo code to receive a balance bonus.",
+activate:"Activate",
+supportDescription:"For any questions about products or orders, contact support.",
+contact:"Contact support →"
+
+}
+
+};
+
+function setLang(language) {
+
+    lang = language;
+
+    localStorage.setItem("wqr_lang", language);
+
+    document.documentElement.lang = language;
+
+    document.getElementById("ru").classList.toggle("active", language === "ru");
+    document.getElementById("en").classList.toggle("active", language === "en");
+
+    document.querySelectorAll("[data]").forEach(element => {
+
+        const key = element.getAttribute("data");
+
+        if(translations[language][key]) {
+            element.innerHTML = translations[language][key];
+        }
+
+    });
+
+    const placeholder = document.getElementById("promoInput");
+
+    placeholder.placeholder = language === "ru"
+        ? "Введите промокод"
+        : "Enter promo code";
+
+    if(document.getElementById("products").classList.contains("active")) {
+        showProducts(document.getElementById("categoryName").textContent);
+    }
+
+}
+
+setLang(lang);
+
+/* FIRST VISIT */
+
+function enterShop() {
+
+    localStorage.setItem("wqr_welcomed", "true");
+
+    document.getElementById("welcome").style.display = "none";
+
+    openPage("home");
+
+}
+
+if(!localStorage.getItem("wqr_welcomed")) {
+
+    document.getElementById("home").classList.remove("active");
+
+    document.getElementById("welcome").style.display = "block";
+
+}
+
+/* REFERRAL COUNT */
+
+function syncReferralStats() {
+
+    updateProfile();
+
+}
+
+syncReferralStats();
+
+</script>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+</body>
+</html>
